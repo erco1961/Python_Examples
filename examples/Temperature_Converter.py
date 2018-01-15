@@ -12,8 +12,6 @@ import stringer
 NAME = "Temperature Converter"
 AUTHOR = "Erin"
 
-
-
 def convert_temp(type):
     print("From convert_temp, starting with " + type)
  
