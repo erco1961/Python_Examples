@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
 
-# an example Python program with imported module
+# an example Python program with imported modules
 # by Erin Coffey
 # 12 January 2018
 
 # import the temperature module into the temp namespace
 import temperature as temp
+# import stringer module for welcome message
+import stringer
 
+NAME = "Temperature Converter"
 AUTHOR = "Erin"
 
-def show_welcome():
-    print("****************** PYTHON *****************")
-    print("** "+AUTHOR+"\'s Temperature conversion program **")
-    print("****************** PYTHON *****************")
-    print()
-# end show_welcome()
+
 
 def convert_temp(type):
     print("From convert_temp, starting with " + type)
@@ -22,7 +20,7 @@ def convert_temp(type):
 # end convert_temp
 
 def main():
-    show_welcome()
+    stringer.show_welcome(NAME)
     should_Exit = False
     converted_temp = 0.0
     while not should_Exit:
@@ -51,8 +49,8 @@ def main():
         if choice.lower() != "y":
             should_Exit = True
     # end while loop
+    print("Bye!")
 # end main()
-print("Bye!")
 
 #if the current module is the main module
 if __name__ == "__main__":

@@ -3,8 +3,9 @@
 # an example Python program
 # by Erin Coffey
 # 11 January 2018
-
+import stringer
 AUTHOR = "Erin"
+NAME = "Future Value"
 
 def calculate_future_value(monthly_investment, yearly_interest_rate, years=20):
 
@@ -14,7 +15,7 @@ def calculate_future_value(monthly_investment, yearly_interest_rate, years=20):
 
   # calculate future value
   total_investment = future_value = 0
- 
+
   for i in range(months):
      future_value += monthly_investment
      monthly_interest_amount = future_value * monthly_interest_rate
@@ -24,11 +25,7 @@ def calculate_future_value(monthly_investment, yearly_interest_rate, years=20):
   return future_value, total_investment
 # end calculate_future_value
 
-def show_welcome():
-  print("*************** PYTHON **************")
-  print("**   "+AUTHOR+"\'s Future Value program   **")
-  print("*************** PYTHON **************")
-# end show_welcome()
+
 
 def display_investment_results(years, totalInv, resulting_value):
   print("After " + str(years) + " years:\t\t")
@@ -38,7 +35,7 @@ def display_investment_results(years, totalInv, resulting_value):
 # end display_investment_results
 
 def main():
-  show_welcome()
+  stringer.show_welcome(NAME)
   should_Exit = False
   yearly_interest_rate = monthly_investment = 0.0
   years = 0
@@ -74,7 +71,7 @@ def main():
     choice = input("Try Future Value program again? (y/n): ")
     if choice.lower() != "y":
       should_Exit = True
-     
+
   # end while loop
 # end main()
 print("Bye!")
