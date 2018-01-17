@@ -3,7 +3,12 @@
 # an example Python program
 # by Erin Coffey
 # 11 January 2018
+
+# import stringer module for welcome message
 import stringer
+# import validation module for taking valid user input
+import validation
+
 AUTHOR = "Erin"
 NAME = "Future Value"
 
@@ -25,8 +30,6 @@ def calculate_future_value(monthly_investment, yearly_interest_rate, years=20):
   return future_value, total_investment
 # end calculate_future_value
 
-
-
 def display_investment_results(years, totalInv, resulting_value):
   print("After " + str(years) + " years:\t\t")
   print("Total investment:\t\t" + str(totalInv))
@@ -41,22 +44,10 @@ def main():
   years = 0
   while not should_Exit:
     print()
-    # get input from the user
-    try:
-      monthly_investment = float(input("Enter monthly investment:\t"))
-    except ValueError:
-      print ("ERROR, monthly rate should be a number. Please try again.")
-      continue
-    try:
-      yearly_interest_rate = float(input("Enter yearly interest rate:\t"))
-    except ValueError:
-      print ("ERROR, yearly interest rate should be a number. Please try again.")
-      continue
-    try:
-      years = int(input("Enter number of years:\t\t"))
-    except ValueError:
-      print ("ERROR, number of years should be an integer. Please try again.")
-      continue
+    # get validated input from the user
+    monthly_investment = validation.get_float("Enter monthly investment:\t", 1000)
+    yearly_interest_rate = validation.get_float("Enter yearly interest rate:\t", 15)
+    years = validation.get_int("Enter number of years:\t\t", 50)
 
     future_value, total_investment = calculate_future_value(monthly_investment, yearly_interest_rate, years)
     display_investment_results(years, total_investment, future_value)
