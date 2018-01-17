@@ -9,6 +9,9 @@ import stringer
 # import validation module for taking valid user input
 import validation
 
+import copy
+import random
+
 AUTHOR = "Erin"
 NAME = "List Processing"
 
@@ -21,6 +24,7 @@ def display_menu():
   print("**\tdel  - Delete a movie from the list")
   print("**\tcnt  - Display the number of [items] in the list")
   print("**\thelp - Display the Command Menu")
+  print("**\ttest - Run automated tests on various lists")
   print("**\texit - Exit program\n")
 
 # end display_menu()
@@ -85,7 +89,7 @@ def show_count_categories():
   print("**\trat  - Number of movies above the given rating")
 # end show_count_categories()
 
-def count_generas(movies_list):
+def count_genres(movies_list):
   #initialize the list
   movies = [["","",0]]
   genre = input("What Genre? ")
@@ -144,12 +148,114 @@ def display_count(movies_list):
   if category.lower() == "tot":
     print("There are " + str(len(movies_list)) + " movies in the list. Use \"list\" command to see them.")
   elif category.lower() == "gen":
-    count_generas(movies_list)
+    count_genres(movies_list)
   elif category.lower() == "rat":
     show_by_rating(movies_list)
   else:
     print("\""+ str(category) + "\" is not a valid selection. Please try again.\n")
 # end display_count()
+
+def run_shallow_copy():
+  print("Running run_shallow_copy() tests...\n")
+  print("A shallow copy example...\n")
+  list_one = [1, 2, 3, 4, 5]
+  print("list_one is: ",end = "")
+  print(list_one)
+  print("Set list_two = list_one...")
+  list_two = list_one
+  print("list_two is: ",end="")
+  print(list_two)
+  print("modify list_two as list_two[1] = 4")
+  list_two[1] = 4
+  print("list_one is: ",end = "")
+  print(list_one)
+  print("list_two is: ",end="")
+  print(list_two)
+  print()
+  
+# end run_shallow_copy()
+
+def run_deep_copy():
+  print("Running run_deep_copy() tests...\n")
+  print("A deep copy example...\n")
+  list_one = [1, 2, 3, 4, 5]
+  print("list_one is: ",end = "")
+  print(list_one)
+  print("Set list_two as list_two = copy.deepcopy(list_one)...")
+  list_two = copy.deepcopy(list_one)
+  print("list_two is: ",end="")
+  print(list_two)
+  print("modify list_two as list_two[1] = 4")
+  list_two[1] = 4
+  print("list_one is: ",end = "")
+  print(list_one)
+  print("list_two is: ",end="")
+  print(list_two)
+  print()
+  
+# end run_deep_copy()
+
+def min_max_choice_shuffle():
+  print("Running min_max_choice_shuffle() tests...\n")
+  list_one = [1, 2, 3, 4, 5]
+  print("list_one is: ",end = "")
+  print(list_one)
+  print()
+  print("A minimum value example...")
+  print("min(list_one) is: ",end="")
+  print(min(list_one))
+  print()
+  print("A maximum value example...")
+  print("max(list_one) is: ",end="")
+  print(max(list_one))
+  print()
+  print("A random choice example...")
+  print("random.choice(list_one) is: ",end="")
+  print(random.choice(list_one))
+  print()
+  print("A shuffle example...")
+  print("The results of random.shuffle(list_one) is: ",end="")
+  random.shuffle(list_one)
+  print(list_one)
+  print()
+# end min_max_choice_shuffle()
+
+def work_with_tuples():
+  print("Running work_with_tuples() tests...\n")
+  print("A tuple is an immutable list...")
+  print("Create a single element tuple as my_int_tuple = (99,)")
+  my_int_tuple = (99,)
+  print("Create a multi element tuple as my_float_tuple = (48.0, 33.9, 22.0, 100.0, 53.9)")
+  my_float_tuple = (48.0, 33.9, 22.0, 100.0, 53.9)
+  print("Create a multi element tuple of various type items as my_varied_tuple = (\"lavander\", 10, \"peach\", 100.0, True)")
+  my_varied_tuple = ("lavander", 10, "peach", 100.0, True)
+
+  print("Show first item in my_float_tuple as my_float_tuple[0]")
+  print(my_float_tuple[0])
+  print("Show last item in my_float_tuple as my_float_tuple[-1]")
+  print(my_float_tuple[-1])
+  print("Show items 1-3 in my_varied_tuple as my_varied_tuple[1:4]")
+  print(my_varied_tuple[1:4])
+  print("Unpack items from my_varied_tuple as a, b, c, d, e = my_varied_tuple")
+  a, b, c, d, e = my_varied_tuple
+  print("value of variable 'a' is: ",end="")
+  print(a)
+  print("value of variable 'e' is: ",end="")
+  print(e)
+  
+
+# end work_with_tuples()
+
+
+def run_tests():
+  print("Running various list tests...")
+
+  run_shallow_copy()
+  run_deep_copy()
+  min_max_choice_shuffle()
+  work_with_tuples()
+
+ # end run_tests() 
 
 def main():
   stringer.show_welcome(NAME)
@@ -172,6 +278,8 @@ def main():
       display_menu()
     elif command.lower() == "cnt":
       display_count(movies_list)
+    elif command.lower() == "test":
+      run_tests()
     elif command.lower() == "exit":
       break
     else:
