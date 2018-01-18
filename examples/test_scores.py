@@ -7,69 +7,103 @@
 # import local module for welcome message
 import stringer
 
-NAME = "My 3 Test Scores"
+NAME = "Test Scores"
 AUTHOR = "Erin"
+
+def display_help():
+    print("Enter 'x' to exit")
+
+# end display_help
+
+def get_score():
+    while True:
+        score = input("Enter test score: ")
+        if score.lower() == "x":
+            return score
+        else:
+            try:
+                score = int(score)
+            except ValueError:
+                print ("ERROR, Score must be an integer number. Please try again.")
+                continue
+        if score < 0 or score > 100:
+            print ("ERROR, Score must be greater than 0 and, less than 100. Please try again.")
+            continue
+        else:
+            return score
+
+# end get_score()
+
+def get_scores(scores):
+    while True:
+        score = get_score()
+        if score != "x":
+            scores.append(score)
+        else:
+            break
+    if len(scores) > 0:
+        return 1
+    else:
+        return "x"
+
+# end get_scores()
+
+def calculate_total_score(scores):
+    total = 0
+    for score in scores:
+        total += score
+    return total
+
+# end calculate_total_score()
+
+def display_results(scores):
+    scores.sort()
+    # get med index by divide and truncate
+    median_index = len(scores) // 2
+    median_value = scores[median_index]
+    
+    total_score = calculate_total_score(scores)
+    # calculate average score
+    average_score = round(total_score / len(scores))
+
+    # format and display the result
+    print("======================")
+    print("Total Score:      ", total_score,
+          "\nNumber of Scores: ", len(scores),
+          "\nAverage Score:    ", average_score,
+          "\nLow Score:        ", min(scores),
+          "\nHigh Score:       ", max(scores),
+          "\nMedian Score:     ", median_value)
+          
+    print()
+    if average_score > 89:
+        print ("Congratulations!!! You are an 'A' student!!!")
+    elif average_score > 79:
+        print ("Congratulations!! You are a 'B' student!!")
+    elif average_score > 69:
+        print ("Congratulations! You are a 'C' student.")
+    elif average_score > 59:
+        print ("Congratulations. You are still a student.")
+    else:
+        print ("Perhaps, you should find vocational work.")
+
+# end display_results()
 
 def main():
     stringer.show_welcome(NAME)
-    should_Exit = False
+    display_help()
     
-    while not should_Exit:
-        total_score = score1 = score2 = score3 = 0
+    while True:
+        scores = []
+        response = get_scores(scores)
+        if response != "x":
+            display_results(scores)
         print()
-        
-        #get scores from the user
-        try:
-            score1 = int(input("Enter first test score: "))
-        except ValueError:
-            print ("ERROR, test score MUST be a number!")
-            continue
-        if score1 < 0 or score1 > 100:
-            print ("ERROR, test score MUST be a number between 0-100")
-            continue
-        total_score += score1
-        try:
-            score2 = int(input("Enter second test score: "))
-        except ValueError:
-            print ("ERROR, test score MUST be a number between 0-100")
-            continue
-        if score2 < 0 or score2 > 100:
-            print ("ERROR, test score MUST be a number between 0-100")
-            continue
-        total_score += score2
-        try:
-            score3 = int(input("Enter third test score: "))
-        except ValueError:
-            print ("ERROR, test score MUST be a number between 0-100")
-            continue
-        if score3 < 0 or score3 > 100:
-            print ("ERROR, test score MUST be a number between 0-100")
-            continue
+    
 
-        total_score += score3
-
-        # calculate average score
-        average_score = round(total_score / 3)
-             
-        # format and display the result
-        print("======================")
-        print("Your scores:\t",score1,score2,score3)
-        print("Total Score:  ", total_score,
-            "\nAverage Score:", average_score)
-        print()
-        if average_score > 89:
-            print ("Congratulations!!! You are an 'A' student!!!")
-        elif average_score > 79:
-            print ("Congratulations!! You are a 'B' student!!")
-        elif average_score > 69:
-            print ("Congratulations! You are a 'C' student.")
-        elif average_score > 59:
-            print ("Congratulations. You are still a student.")
-        else:
-            print ("You should find vocational work!!!!")
         choice = input("Try again? (y/n): ")
         if choice.lower() != "y":
-            should_Exit = True
+            break
         # end while loop
     print("Bye!")
 # end main
