@@ -11,9 +11,12 @@ import validation
 
 import copy
 import random
+import os.path
+import csv
 
 AUTHOR = "Erin"
 NAME = "List Processing"
+MOVIE_FILE = "saved_movies.txt"
 
 def display_menu():
   print("\n******************************")
@@ -67,6 +70,7 @@ def add_movie_to_list(movies_list):
   movie_rating = validation.get_float("Rating: ", 10)
   movie = [str(movie_name), str(movie_genera), movie_rating]
   movies_list.append(movie)
+  save_movie_to_file(movie)
   print("\"" + str(movie) + "\" has been added to the list.")
 
 # end add_movie_to_list()
@@ -77,6 +81,7 @@ def delete_movie_from_list(movies_list):
   else:
     index = validation.get_int("Movie Index: ", len(movies_list))
     movie = movies_list.pop(index-1)
+    replace_movies_in_file(movies_list)
     print(str(movie[0]) + " has been deleted.\n")
 # end delete_movie_from_list()
 
@@ -255,13 +260,80 @@ def run_tests():
   min_max_choice_shuffle()
   work_with_tuples()
 
- # end run_tests() 
+ # end run_tests()
+
+def read_movies_file(movies_list):
+  movie = []
+  with open(MOVIE_FILE) as file:
+    for line in file:
+      if line.isspace():
+        continue
+      line = line.replace("\n", "")
+      data = line.split(",")
+      name = data[0].strip()
+      genre = data[1].strip()
+      rating = data[2].strip()
+      movie = [name, genre, float(rating)]
+      movies_list.append(movie)
+    
+ # movie = [str(movie_name), str(movie_genera), movie_rating]
+ 
+# end read_movies_file
+
+def save_movie_to_file(movie):
+  try:
+    name = movie[0]
+    genre = movie[1]
+    rating = movie[2]
+    with open(MOVIE_FILE, "a") as file:
+      file.write("\n" + name + ", " + genre + ", " + str(rating) + "\n")
+  except IOError:
+    print("ERROR: File I/O Error prevents storing data to file.")
+# end save_movie_to_file()
+
+def replace_movies_in_file(movies_list):
+  try:
+    with open(MOVIE_FILE, "w") as file:
+      if len(movies_list) == 0:
+        print("Empty movies list! Creating Empty movies file.")
+        file.write("")
+      else:
+        for movie in movies_list:
+          name = movie[0]
+          genre = movie[1]
+          rating = movie[2]
+          file.write(name + ", " + genre + ", " + str(rating) + "\n")
+  except IOError:
+    print("ERROR: File I/O Error prevents storing data to file.")
+
+# end replace_movies_in_file()
+
+def initialize_movie_data(movies_list):
+  # the MOVIE_FILE did not exist where we expected it
+  # initialize the list
+  movie = ["It's a good life", "Drama", 9.5]
+  movie2 = ["Blade Runner", "Science Fiction", 10]
+  movie3 = ["Shrek", "Animation", 8.5]
+  movies_list.append(movie)
+  movies_list.append(movie2)
+  movies_list.append(movie3)
+  # see if we can write the data to the file
+  replace_movies_in_file(movies_list)
+
+# end initialize_movie_data()
 
 def main():
   stringer.show_welcome(NAME)
-  movies_list = [["It's a good life", "Drama", 9.5],
-                 ["Blade Runner", "Science Fiction", 10],
-                 ["Shrek", "Animation", 8.5]]
+  movies_list = [[]]#initialize empty list with correct structure
+  movies_list.pop()#remove empty element
+  # let's see if the MOVIE_FILE exists or not
+  if os.path.isfile(MOVIE_FILE):
+    # the MOVIE_FILE is where we expected it
+    read_movies_file(movies_list)
+  else:
+    # the file does not exist where it is expected
+    # initialize data and try to create the file
+    initialize_movie_data(movies_list)
 
   display_menu()
 
