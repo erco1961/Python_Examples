@@ -15,12 +15,12 @@ import os.path
 import csv
 import pickle # use for binary files access
 
-AUTHOR = "Erin"
+AUTHOR = "Erin Coffey"
 NAME = "List Processing"
 MOVIE_FILE_TXT = "saved_movies.txt"
 MOVIE_FILE_CSV = "saved_movies.csv"
 MOVIE_FILE_BIN = "saved_movies.bin"
-DEBUG = True
+DEBUG = False
 
 def pick_mode():
   print("\n******************************")
@@ -251,7 +251,6 @@ def work_with_tuples():
   print("value of variable 'e' is: ",end="")
   print(e)
   
-
 # end work_with_tuples()
 
 
@@ -269,17 +268,25 @@ def read_movies_file_txt(movies_list):
   if DEBUG:
     print("From read_movies_file_txt, the save file is " + MOVIE_FILE_TXT)
   movie = []
-  with open(MOVIE_FILE_TXT) as file:
-    for line in file:
-      if line.isspace():
-        continue
-      line = line.replace("\n", "")
-      data = line.split(",")
-      name = data[0].strip()
-      genre = data[1].strip()
-      rating = data[2].strip()
-      movie = [name, genre, float(rating)]
-      movies_list.append(movie)
+  try:
+    with open(MOVIE_FILE_TXT) as file:
+      for line in file:
+        if line.isspace():
+          continue
+        line = line.replace("\n", "")
+        data = line.split(",")
+        name = data[0].strip()
+        genre = data[1].strip()
+        rating = data[2].strip()
+        movie = [name, genre, float(rating)]
+        movies_list.append(movie)
+  except IOError as e:
+    print("IOError:", e)
+  except OSError as e:
+    print("OSError:", e)
+  except Exception as e:
+    print(type(e), e)
+    
 
 # end read_movies_file_txt(movies_list, file):
 
@@ -287,15 +294,21 @@ def read_movies_file_csv(movies_list):
   if DEBUG:
     print("From read_movies_file_csv, the save file is " + MOVIE_FILE_CSV)
   movie = []
-  with open(MOVIE_FILE_CSV, newline="") as file:
-    reader = csv.reader(file)
-    for data in reader:
-      name = data[0]
-      genre = data[1]
-      rating = data[2]
-      movie = [name, genre, float(rating)]
-      movies_list.append(movie)
-
+  try:
+    with open(MOVIE_FILE_CSV, newline="") as file:
+      reader = csv.reader(file)
+      for data in reader:
+        name = data[0]
+        genre = data[1]
+        rating = data[2]
+        movie = [name, genre, float(rating)]
+        movies_list.append(movie)
+  except IOError as e:
+    print("IOError:", e)
+  except OSError as e:
+    print("OSError:", e)
+  except Exception as e:
+    print(type(e), e)
 # end read_movies_file_csv(movies_list, file):
 
 def read_movies_file(movies_list, save_mode):
@@ -313,12 +326,12 @@ def read_movies_file(movies_list, save_mode):
       try:
         with open(MOVIE_FILE_BIN, "rb") as file:
           movies = pickle.load(file)
-      except IOError:
-        print("ERROR: IOError, Pickle could not load binary file contents!")
-      except OSError:
-        print("ERROR: OSError reading file!")
+      except IOError as e:
+        print("IOERROR:", e)
+      except OSError as e:
+        print("OSERROR:", e)
       except Exception:
-        print("ERROR: An unexpected error occurred while trying to read the movies file!")
+        print(type(e), e)
     else:
       print(MOVIE_LIST_BIN + " is empty!")
     if DEBUG:
@@ -336,10 +349,15 @@ def save_movie_to_file(movie):
     name = movie[0]
     genre = movie[1]
     rating = movie[2]
-    with open(MOVIE_FILE_TXT, "a") as file:
-      file.write(name + ", " + genre + ", " + str(rating) + "\n")
-  except IOError:
-    print("ERROR: File I/O Error prevents storing data to file.")
+    try:
+      with open(MOVIE_FILE_TXT, "a") as file:
+        file.write(name + ", " + genre + ", " + str(rating) + "\n")
+    except IOError as e:
+      print("IOError:", e)
+    except OSError as e:
+      print("OSError:", e)
+  except Exception as e:
+    print(type(e), e)
 # end save_movie_to_file()
 
 def replace_movies_in_txt_file(movies_list):
@@ -356,8 +374,12 @@ def replace_movies_in_txt_file(movies_list):
           genre = movie[1]
           rating = movie[2]
           file.write(name + ", " + genre + ", " + str(rating) + "\n")
-  except IOError:
-    print("ERROR: File I/O Error prevents storing data to txt file: " + MOVIE_FILE_TXT)
+  except IOError as e:
+    print("IOError:", e)
+  except OSError as e:
+    print("OSError:", e)
+  except Exception as e:
+    print(type(e), e)
 
 # end replace_movies_in_txt_file(movies_list):
 
@@ -368,8 +390,12 @@ def replace_movies_in_csv_file(movies_list):
     with open(MOVIE_FILE_CSV, "w", newline="") as file:
       writer = csv.writer(file)
       writer.writerows(movies_list)
-  except IOError:
-    print("ERROR: File I/O Error prevents storing data to csv file: " + MOVIE_FILE_CSV)
+  except IOError as e:
+    print("IOError:", e)
+  except OSError as e:
+    print("OSError:", e)
+  except Exception as e:
+    print(type(e), e)
 
 # end replace_movies_in_csv_file(movies_list):
 
@@ -384,10 +410,13 @@ def replace_movies_in_file(movies_list, save_mode):
     try:
       with open(MOVIE_FILE_BIN, "wb") as file:
         pickle.dump(movies_list, file)
-    except IOError:
-      print("ERROR: File I/O Error prevents storing data to binary file: " + MOVIE_FILE_BIN)
+    except IOError as e:
+      print("IOError:", e)
+    except OSError as e:
+      print("OSError:", e)
+    except Exception as e:
+      print(type(e), e)
   
-
 # end replace_movies_in_file()
 
 def initialize_movie_data(movies_list, save_mode):
@@ -426,7 +455,7 @@ def main():
   save_mode = ""
   file_to_find = ""
 
-  pick_mode()
+  pick_mode()#show user the types of files we can save the movies in
 
   while True:
     save_mode = input("\nMode?\t")
