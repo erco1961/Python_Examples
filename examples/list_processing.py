@@ -13,10 +13,24 @@ import copy
 import random
 import os.path
 import csv
+import pickle # use for binary files access
 
 AUTHOR = "Erin"
 NAME = "List Processing"
-MOVIE_FILE = "saved_movies.txt"
+MOVIE_FILE_TXT = "saved_movies.txt"
+MOVIE_FILE_CSV = "saved_movies.csv"
+MOVIE_FILE_BIN = "saved_movies.bin"
+DEBUG = True
+
+def pick_mode():
+  print("\n******************************")
+  print("**       MODES       **")
+  print("******************************\n")
+  print("**\ttxt - Program uses .txt file for movie storage")
+  print("**\tcsv - Program uses .csv file for movie storage")
+  print("**\tbin - Program uses .bin file for movie storage")
+
+# end pick_mode()
 
 def display_menu():
   print("\n******************************")
@@ -33,6 +47,8 @@ def display_menu():
 # end display_menu()
 
 def print_movie_list(movies_list):
+  if DEBUG:
+    print("From print_movie_list, the length is " + str(len(movies_list)))
   message = "The movie"
   suffix = ""
   if len(movies_list) > 1:
@@ -59,8 +75,9 @@ def print_movie_list(movies_list):
 
 # end print_movie_list()
 
-def add_movie_to_list(movies_list):
-  #print("From add_movie_to_list()")
+def add_movie_to_list(movies_list, mode):
+  if DEBUG:
+    print("From add_movie_to_list(), mode is: " + mode)
   movie_name = input("Name: ")
   if movie_name == "":
     movie = "Silent Movie"
@@ -70,18 +87,21 @@ def add_movie_to_list(movies_list):
   movie_rating = validation.get_float("Rating: ", 10)
   movie = [str(movie_name), str(movie_genera), movie_rating]
   movies_list.append(movie)
-  save_movie_to_file(movie)
+  if mode != "txt":
+    replace_movies_in_file(movies_list, mode)#write entire list
+  else:
+    save_movie_to_file(movie)#append the movie
   print("\"" + str(movie) + "\" has been added to the list.")
 
 # end add_movie_to_list()
 
-def delete_movie_from_list(movies_list):
+def delete_movie_from_list(movies_list, save_mode):
   if len(movies_list) == 0:
     print("There are no movies in the list!")
   else:
     index = validation.get_int("Movie Index: ", len(movies_list))
     movie = movies_list.pop(index-1)
-    replace_movies_in_file(movies_list)
+    replace_movies_in_file(movies_list, save_mode)
     print(str(movie[0]) + " has been deleted.\n")
 # end delete_movie_from_list()
 
@@ -111,38 +131,21 @@ def count_genres(movies_list):
 
 def show_by_rating(movies_list):
   #initialize the list
-  #movies = [[0, ["","",0]]]
-  #movies_sorted = [["","",0]]
   movies_to_send = [["","",0]]
   # remove the initial element
-  #movies.pop(0)
-  #movies_sorted.pop(0)
   movies_to_send.pop()
   count = 0
   rating = validation.get_float("What is the lowest rated movie you want to see? ", 10)
   for movie in movies_list:
-    #print("The movie is \"" + str(movie[0]) + "\" and, the rating is: " + str(movie[2]))
     if int(movie[2]) >= rating:
-      #newMovie =[movie[2],[movie]]
-      #movies.append(newMovie)
       movies_to_send.append(movie)
       count += 1
-
-  
+      
   if len(movies_to_send) > 0:
     print(str(len(movies_to_send)) + " movies found with a rating of at least " + str(rating))
     print_movie_list(movies_to_send)
   else:
-    print("There are " + str(len(movies_to_send)) + " movies in the list with a rating of at least " + str(rating))
-    #this algorithm for sorting by rating is not perfect yet!
-    
-##    for sorted in movies:
-##      print("sorted[0][0]: ", end="")
-##      print(sorted)
-##      movies_sorted.append(sorted[1][0])
-##    print("Movies_sorted: ", end="")
-
- #   print_movie_list(movies_sorted.sort())
+    print("There are no movies in the list with a rating of at least " + str(rating))
       
 # end show_by_rating()
 
@@ -262,9 +265,11 @@ def run_tests():
 
  # end run_tests()
 
-def read_movies_file(movies_list):
+def read_movies_file_txt(movies_list):
+  if DEBUG:
+    print("From read_movies_file_txt, the save file is " + MOVIE_FILE_TXT)
   movie = []
-  with open(MOVIE_FILE) as file:
+  with open(MOVIE_FILE_TXT) as file:
     for line in file:
       if line.isspace():
         continue
@@ -275,25 +280,73 @@ def read_movies_file(movies_list):
       rating = data[2].strip()
       movie = [name, genre, float(rating)]
       movies_list.append(movie)
-    
- # movie = [str(movie_name), str(movie_genera), movie_rating]
+
+# end read_movies_file_txt(movies_list, file):
+
+def read_movies_file_csv(movies_list):
+  if DEBUG:
+    print("From read_movies_file_csv, the save file is " + MOVIE_FILE_CSV)
+  movie = []
+  with open(MOVIE_FILE_CSV, newline="") as file:
+    reader = csv.reader(file)
+    for data in reader:
+      name = data[0]
+      genre = data[1]
+      rating = data[2]
+      movie = [name, genre, float(rating)]
+      movies_list.append(movie)
+
+# end read_movies_file_csv(movies_list, file):
+
+def read_movies_file(movies_list, save_mode):
+  movies = []
+  if DEBUG:
+    print("From read_movies_file, the movie save_mode is " + save_mode + " and, the movies file is " + MOVIE_FILE_BIN)
+  if save_mode == "txt":
+    read_movies_file_txt(movies_list)
+  elif save_mode == "csv":
+    read_movies_file_csv(movies_list)
+  else:#must be in binary mode
+    if os.stat(MOVIE_FILE_BIN).st_size != 0:#don't read from empty file
+      if DEBUG:
+        print(MOVIE_FILE_BIN + " has size: " + str(os.stat(MOVIE_FILE_BIN).st_size))
+      try:
+        with open(MOVIE_FILE_BIN, "rb") as file:
+          movies = pickle.load(file)
+      except IOError:
+        print("ERROR: IOError, Pickle could not load binary file contents!")
+      except OSError:
+        print("ERROR: OSError reading file!")
+      except Exception:
+        print("ERROR: An unexpected error occurred while trying to read the movies file!")
+    else:
+      print(MOVIE_LIST_BIN + " is empty!")
+    if DEBUG:
+      print("From read_movies_file, we read " + str(len(movies))+ " movies from the binary file.")
+    for i in range(len(movies)):
+      movie = movies[i]
+      movies_list.append(movie)
  
 # end read_movies_file
 
 def save_movie_to_file(movie):
+  if DEBUG:
+    print("From save_movie_to_file...")
   try:
     name = movie[0]
     genre = movie[1]
     rating = movie[2]
-    with open(MOVIE_FILE, "a") as file:
-      file.write("\n" + name + ", " + genre + ", " + str(rating) + "\n")
+    with open(MOVIE_FILE_TXT, "a") as file:
+      file.write(name + ", " + genre + ", " + str(rating) + "\n")
   except IOError:
     print("ERROR: File I/O Error prevents storing data to file.")
 # end save_movie_to_file()
 
-def replace_movies_in_file(movies_list):
+def replace_movies_in_txt_file(movies_list):
+  if DEBUG:
+    print("From replace_movies_in_txt_file...")
   try:
-    with open(MOVIE_FILE, "w") as file:
+    with open(MOVIE_FILE_TXT, "w") as file:
       if len(movies_list) == 0:
         print("Empty movies list! Creating Empty movies file.")
         file.write("")
@@ -304,11 +357,42 @@ def replace_movies_in_file(movies_list):
           rating = movie[2]
           file.write(name + ", " + genre + ", " + str(rating) + "\n")
   except IOError:
-    print("ERROR: File I/O Error prevents storing data to file.")
+    print("ERROR: File I/O Error prevents storing data to txt file: " + MOVIE_FILE_TXT)
+
+# end replace_movies_in_txt_file(movies_list):
+
+def replace_movies_in_csv_file(movies_list):
+  if DEBUG:
+    print("From replace_movies_in_csv_file...")
+  try:
+    with open(MOVIE_FILE_CSV, "w", newline="") as file:
+      writer = csv.writer(file)
+      writer.writerows(movies_list)
+  except IOError:
+    print("ERROR: File I/O Error prevents storing data to csv file: " + MOVIE_FILE_CSV)
+
+# end replace_movies_in_csv_file(movies_list):
+
+def replace_movies_in_file(movies_list, save_mode):
+  if DEBUG:
+    print("From replace_movies_in_file, the save_mode is "+save_mode)
+  if save_mode == "txt":
+    replace_movies_in_txt_file(movies_list)
+  elif save_mode == "csv":
+    replace_movies_in_csv_file(movies_list)
+  else:
+    try:
+      with open(MOVIE_FILE_BIN, "wb") as file:
+        pickle.dump(movies_list, file)
+    except IOError:
+      print("ERROR: File I/O Error prevents storing data to binary file: " + MOVIE_FILE_BIN)
+  
 
 # end replace_movies_in_file()
 
-def initialize_movie_data(movies_list):
+def initialize_movie_data(movies_list, save_mode):
+  if DEBUG:
+    print("From initialize_movie_data, the save_mode is " + save_mode)
   # the MOVIE_FILE did not exist where we expected it
   # initialize the list
   movie = ["It's a good life", "Drama", 9.5]
@@ -317,23 +401,57 @@ def initialize_movie_data(movies_list):
   movies_list.append(movie)
   movies_list.append(movie2)
   movies_list.append(movie3)
+  if DEBUG:
+    print("From initialize_movie_data, the movies are: ", end="")
+    print(movies_list)
   # see if we can write the data to the file
-  replace_movies_in_file(movies_list)
+  replace_movies_in_file(movies_list, save_mode)
 
 # end initialize_movie_data()
+
+def get_save_file(save_mode):
+  if save_mode == "txt":
+    return MOVIE_FILE_TXT
+  elif save_mode == "csv":
+    return MOVIE_FILE_CSV
+  else:
+    return MOVIE_FILE_BIN
+  
+ # end get_save_file() 
 
 def main():
   stringer.show_welcome(NAME)
   movies_list = [[]]#initialize empty list with correct structure
   movies_list.pop()#remove empty element
+  save_mode = ""
+  file_to_find = ""
+
+  pick_mode()
+
+  while True:
+    save_mode = input("\nMode?\t")
+    save_mode = save_mode.rstrip()
+    if save_mode.lower() == "txt":
+      print("From main(), txt file selected by user.")
+      break
+    elif save_mode.lower() == "csv":
+      print("From main(), csv file selected by user.")
+      break
+    elif save_mode.lower() == "bin":
+      print("From main(), bin file selected by user.")
+      break
+    else:
+      print("\""+ str(save_mode) + "\" is not a valid selection. Please try again.\n")
+
   # let's see if the MOVIE_FILE exists or not
-  if os.path.isfile(MOVIE_FILE):
+  file_to_find = get_save_file(save_mode)
+  if os.path.isfile(file_to_find):
     # the MOVIE_FILE is where we expected it
-    read_movies_file(movies_list)
+    read_movies_file(movies_list, save_mode)
   else:
     # the file does not exist where it is expected
     # initialize data and try to create the file
-    initialize_movie_data(movies_list)
+    initialize_movie_data(movies_list, save_mode)
 
   display_menu()
 
@@ -343,9 +461,9 @@ def main():
     if command.lower() == "list":
       print_movie_list(movies_list)
     elif command.lower() == "add":
-      add_movie_to_list(movies_list)
+      add_movie_to_list(movies_list, save_mode)
     elif command.lower() == "del":
-      delete_movie_from_list(movies_list)
+      delete_movie_from_list(movies_list, save_mode)
     elif command.lower() == "help":
       display_menu()
     elif command.lower() == "cnt":

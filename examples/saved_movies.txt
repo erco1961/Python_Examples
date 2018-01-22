@@ -3,3 +3,4 @@ Blade Runner, Science Fiction, 10
 Shrek, Animation, 8.5
 
 Star Wars, Science Fiction, 9.6
+newText, new, 6.0
