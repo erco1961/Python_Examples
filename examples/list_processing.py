@@ -60,7 +60,7 @@ def print_movie_list(movies_list):
   print(message + suffix)
   i = 1
   print("\n")
-  print("{:23} {:5} {:20} {:5} {:10}".format("NAME", "|", "GENRE", "|", "RATING"))
+  print("   {:20} {:5} {:20} {:5} {:10}".format("NAME", "|", "GENRE", "|", "RATING"))
   print("\n\n")
   for movie in movies_list:
     print(str(i) + ". ", end="")
@@ -88,11 +88,13 @@ def add_movie_to_list(movies_list, mode):
   movie_name = input("Name: ")
   if movie_name == "":
     movie = "Silent Movie"
-  movie_genera = input("Genre: ")
-  if movie_genera == "":
-    movie_genera = "Other, non-specific"
+  movie_name = movie_name[0:20]#limit to 20 chars
+  movie_genre = input("Genre: ")
+  if movie_genre == "":
+    movie_genre = "Other, non-specific"
+  movie_genre = movie_genre[0:20]#limit to 20 chars
   movie_rating = validation.get_float("Rating: ", 10)
-  movie = [str(movie_name), str(movie_genera), movie_rating]
+  movie = [str(movie_name), str(movie_genre), movie_rating]
   movies_list.append(movie)
   if mode != "txt":
     replace_movies_in_file(movies_list, mode)#write entire list
