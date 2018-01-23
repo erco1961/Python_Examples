@@ -24,7 +24,7 @@ DEBUG = False
 
 def pick_mode():
   print("\n******************************")
-  print("**       MODES       **")
+  print("**          MODES           **")
   print("******************************\n")
   print("**\ttxt - Program uses .txt file for movie storage")
   print("**\tcsv - Program uses .csv file for movie storage")
@@ -59,18 +59,25 @@ def print_movie_list(movies_list):
     message = "There no movies in the list!"
   print(message + suffix)
   i = 1
-  print("       NAME       |       GENRE       |       RATING\n\n")
+  print("\n")
+  print("{:23} {:5} {:20} {:5} {:10}".format("NAME", "|", "GENRE", "|", "RATING"))
+  print("\n\n")
   for movie in movies_list:
     print(str(i) + ". ", end="")
-    index = 0
-    entry = ""
-    for item in movie:
-      entry += str(item)
-      if index < len(movie)-1:
-        entry += " | "
-      index += 1
-    print(entry)
+##    index = 0
+##    entry = ""
+##    for item in movie:
+##      entry += str(item)
+##      if index < len(movie)-1:
+##        entry += " | "
+##      index += 1
+##    print(entry)
     i += 1
+
+    name = movie[0]
+    genre = movie[1]
+    rating = movie[2]
+    print("{:20} {:5} {:20} {:5} {:3}".format(name, "|", genre, "|", str(rating)))
   print()
 
 # end print_movie_list()
@@ -97,12 +104,15 @@ def add_movie_to_list(movies_list, mode):
 
 def delete_movie_from_list(movies_list, save_mode):
   if len(movies_list) == 0:
-    print("There are no movies in the list!")
+    raise ValueError("There are no movies in the list!")
   else:
     index = validation.get_int("Movie Index: ", len(movies_list))
-    movie = movies_list.pop(index-1)
-    replace_movies_in_file(movies_list, save_mode)
-    print(str(movie[0]) + " has been deleted.\n")
+    #double check theuser's intention to delete the movie
+    choice = input("Are you sure you want to delete the movie (y/n)?")
+    if choice.lower() == "y":
+      movie = movies_list.pop(index-1)
+      replace_movies_in_file(movies_list, save_mode)
+      print(str(movie[0]) + " has been deleted.\n")
 # end delete_movie_from_list()
 
 def show_count_categories():
@@ -483,28 +493,31 @@ def main():
     initialize_movie_data(movies_list, save_mode)
 
   display_menu()
-
-  while True:
-    command = input("\nBye Your Command:\t")
-    command = command.rstrip()
-    if command.lower() == "list":
-      print_movie_list(movies_list)
-    elif command.lower() == "add":
-      add_movie_to_list(movies_list, save_mode)
-    elif command.lower() == "del":
-      delete_movie_from_list(movies_list, save_mode)
-    elif command.lower() == "help":
-      display_menu()
-    elif command.lower() == "cnt":
-      display_count(movies_list)
-    elif command.lower() == "test":
-      run_tests()
-    elif command.lower() == "exit":
-      break
-    else:
-      print("\""+ str(command) + "\" is not a valid selection. Please try again.\n")
-  # end while loop
-  print("Bye!")
+  try:
+    while True:
+      command = input("\nBye Your Command:\t")
+      command = command.rstrip()
+      if command.lower() == "list":
+        print_movie_list(movies_list)
+      elif command.lower() == "add":
+        add_movie_to_list(movies_list, save_mode)
+      elif command.lower() == "del":
+        delete_movie_from_list(movies_list, save_mode)
+      elif command.lower() == "help":
+        display_menu()
+      elif command.lower() == "cnt":
+        display_count(movies_list)
+      elif command.lower() == "test":
+        run_tests()
+      elif command.lower() == "exit":
+        break
+      else:
+        print("\""+ str(command) + "\" is not a valid selection. Please try again.\n")
+   # end while loop
+  except ValueError as e:
+    print("ValueError:", e)
+  finally:
+    print("Bye!")
 # end main()
 
 

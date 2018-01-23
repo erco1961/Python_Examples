@@ -1,7 +1,1 @@
-It's a good life, Drama, 9.5
-Blade Runner, Science Fiction, 10
-Shrek, Animation, 8.5
-
-Star Wars, Science Fiction, 9.6
-newText, new, 6.0
-Titanic, Drama, 9.0
+now and then, drama, 4.0
