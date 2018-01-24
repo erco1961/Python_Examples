@@ -8,7 +8,8 @@
 import stringer
 
 NAME = "Test Scores"
-AUTHOR = "Erin"
+AUTHOR = "Erin Coffey"
+
 
 def display_help():
     print("Enter 'x' to exit")

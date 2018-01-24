@@ -11,7 +11,7 @@ import sys
 # by Erin Coffey
 # 15 January 2018
 
-def show_welcome(program_name = "test", author = "Erin"):
+def show_welcome(program_name = "test", author = "Erin Coffey"):
     """
     Accepts string program_name
     Accepts string author
@@ -49,7 +49,9 @@ def printStars(num_Stars):
 
 # use main for testing the functions in this module
 def main():
+    print("Running test...\n")
     show_welcome()
+    print("\nSuccess!")
 
 # if this is the main module, run the tests in main()
 if __name__ == "__main__":

@@ -10,7 +10,7 @@ import temperature as temp
 import stringer
 
 NAME = "Temperature Converter"
-AUTHOR = "Erin"
+AUTHOR = "Erin Coffey"
 
 def convert_temp(type):
     print("From convert_temp, starting with " + type)

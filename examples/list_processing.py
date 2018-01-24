@@ -60,6 +60,7 @@ def print_movie_list(movies_list):
   print(message + suffix)
   i = 1
   print("\n")
+  #use field widths to align results
   print("   {:20} {:5} {:20} {:5} {:10}".format("NAME", "|", "GENRE", "|", "RATING"))
   print("\n\n")
   for movie in movies_list:
@@ -88,10 +89,12 @@ def add_movie_to_list(movies_list, mode):
   movie_name = input("Name: ")
   if movie_name == "":
     movie = "Silent Movie"
+  movie_name = movie_name.title()#make title case so the initial char is capitol
   movie_name = movie_name[0:20]#limit to 20 chars
   movie_genre = input("Genre: ")
   if movie_genre == "":
     movie_genre = "Other, non-specific"
+  movie_genre = movie_genre.title()
   movie_genre = movie_genre[0:20]#limit to 20 chars
   movie_rating = validation.get_float("Rating: ", 10)
   movie = [str(movie_name), str(movie_genre), movie_rating]
@@ -124,6 +127,8 @@ def show_count_categories():
   print("**\ttot  - Total number of movies")
   print("**\tgen  - Number of genres")
   print("**\trat  - Number of movies above the given rating")
+  print("**\tbeg  - Number of movies with Name begining with specified string")
+  print("**\tend  - Number of movies with Name ending with specified string")
 # end show_count_categories()
 
 def count_genres(movies_list):
@@ -161,6 +166,46 @@ def show_by_rating(movies_list):
       
 # end show_by_rating()
 
+def show_by_beginning(movies_list):
+  #initialize the list
+  movies_to_send = [["","",0]]
+  # remove the initial element
+  movies_to_send.pop()
+  count = 0
+  beginning = input("Search string? ")
+  for movie in movies_list:
+    if movie[0].startswith(beginning):
+      movies_to_send.append(movie)
+      count += 1
+      
+  if len(movies_to_send) > 0:
+    print(str(len(movies_to_send)) + " movies found with Name beginning with " + beginning)
+    print_movie_list(movies_to_send)
+  else:
+    print("There are NO movies in the list with with Name beginning with " + beginning)
+      
+# end show_by_beginning()
+
+def show_by_ending(movies_list):
+  #initialize the list
+  movies_to_send = [["","",0]]
+  # remove the initial element
+  movies_to_send.pop()
+  count = 0
+  ending = input("Search string? ")
+  for movie in movies_list:
+    if movie[0].endswith(ending):
+      movies_to_send.append(movie)
+      count += 1
+      
+  if len(movies_to_send) > 0:
+    print(str(len(movies_to_send)) + " movies found with a Name ending with " + ending)
+    print_movie_list(movies_to_send)
+  else:
+    print("There are NO movies in the list with with a Name ending with " + ending)
+      
+# end show_by_ending()
+
 def display_count(movies_list):
   show_count_categories()
   category = input("Category: ")
@@ -171,6 +216,10 @@ def display_count(movies_list):
     count_genres(movies_list)
   elif category.lower() == "rat":
     show_by_rating(movies_list)
+  elif category.lower() == "beg":
+    show_by_beginning(movies_list)
+  elif category.lower() == "end":
+    show_by_ending(movies_list)
   else:
     print("\""+ str(category) + "\" is not a valid selection. Please try again.\n")
 # end display_count()
@@ -262,6 +311,7 @@ def work_with_tuples():
   print(a)
   print("value of variable 'e' is: ",end="")
   print(e)
+  
   
 # end work_with_tuples()
 

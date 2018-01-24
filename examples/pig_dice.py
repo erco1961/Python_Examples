@@ -10,7 +10,7 @@ import stringer
 import random
 
 NAME = "Pig Dice"
-AUTHOR = "Erin"
+AUTHOR = "Erin Coffey"
 
 def display_rules():
     print("\nHow to play the PIG game...")

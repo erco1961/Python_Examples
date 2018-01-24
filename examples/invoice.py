@@ -7,62 +7,92 @@
 # import local module for welcome message
 import stringer
 
+# import validation module for taking valid user input
+import validation as val
+
+#to fix rounding errors
+from decimal import Decimal
+from decimal import ROUND_HALF_UP
+
+# currency formatting
+import locale as lc
+
 NAME = "Invoice"
-AUTHOR = "Erin"
+AUTHOR = "Erin Coffey"
 
 def main():
     stringer.show_welcome(NAME)
     should_Exit = False
-    
+
+    print()
+    print("======================")
+    print()
+    print("The customer type can be:")
+    print("\nRetail:'r'")
+    print("or")
+    print("Wholesale:'w'")
+    print()
+    print("======================")
+    print()
+         
     while not should_Exit:
         new_invoice_total = invoice_total = discount_percent = discount_amount = 0
         customer_type = "unknown_type" 
-        print()
-        print("======================")
-        print()
+
+        
         # get customer_type from the user
-        try:
-            customer_type = input("Enter customer type (r/w):\t")
-            invoice_total = float(input("Enter invoice total:\t\t"))
-        except ValueError:
-            print ("ERROR, invoice total must be a number. Please try again.")
-            continue
+        customer_type = input("Enter customer type (r/w):\t")
+        order_total = Decimal(val.get_float("Enter order total:\t\t", 100000))
+        order_total = order_total.quantize(Decimal("1.00"), ROUND_HALF_UP)
+
         # determine discount for retail customer
         if customer_type.lower() == "r":
-            if invoice_total > 0 and invoice_total < 100:
-                discount_percent = 0
-            elif invoice_total >= 100 and invoice_total < 250:
-                discount_percent = .1
-            elif invoice_total >= 250 and invoice_total < 500:
-                discount_percent = .2
-            elif invoice_total >= 500:
-                discount_percent = .25 
+            customer_type = "Retail"
+            if order_total > 0 and order_total < 100:
+                discount_percent = Decimal("0")
+            elif order_total >= 100 and order_total < 250:
+                discount_percent = Decimal(".1")
+            elif order_total >= 250 and order_total < 500:
+                discount_percent = Decimal(".2")
+            elif order_total >= 500:
+                discount_percent = Decimal(".25")
+                
         # determine discount for wholesale customer
         elif customer_type.lower() == "w":
-            if invoice_total > 0 and invoice_total < 500:
-                discount_percent = .4
-            elif invoice_total >= 500:
-                discount_percent = .5
+            customer_type = "Wholesale"
+            if order_total > 0 and order_total < 500:
+                discount_percent = Decimal(".4")
+            elif order_total >= 500:
+                discount_percent = Decimal(".5")
+                
         # customer is neither wholesale nor retail so discount_percent at zero
         else:
-            customer_type = "unknown_type"
+            customer_type = "Unknown"
     
         # calculate discount and new invoice total
-        if customer_type == "unknown_type":
-            new_invoice_total = invoice_total
-        else:
-            discount_amount = round(invoice_total * discount_percent, 2)
+        discount = order_total * discount_percent
+        discount = discount.quantize(Decimal("1.00"), ROUND_HALF_UP)
             
-        new_invoice_total = invoice_total - discount_amount
+        subtotal = order_total - discount
+        tax_percent = Decimal(".05")
+        sales_tax = subtotal * tax_percent
+        sales_tax = sales_tax.quantize(Decimal("1.00"), ROUND_HALF_UP)
+        invoice_total = subtotal + sales_tax
 
         # display results
+        # determine the region for the money
+        result = lc.setlocale(lc.LC_ALL, "")
+        if result == "C":
+            lc.setlocale(lc.LC_ALL, "en_US")
+        line = "{:20} {:>10}"
         print()
-        print("Customer Type:\t\t\t" + customer_type)
-        print("Invoice Total:\t\t\t" + str(invoice_total))
-        print("Discount Percent:\t\t" + str(discount_percent))
-        print("Discount Amount:\t\t" + str(discount_amount))
-        print("New Invoice Total:\t\t" + str(new_invoice_total))
-        
+        print("Customer Type:          {:10}".format(customer_type))
+        print(line.format("Order total:", lc.currency(order_total, grouping=True)))
+        print(line.format("Discount:", lc.currency(discount, grouping=True)))
+        print(line.format("Subtotal:", lc.currency(subtotal, grouping=True)))
+        print(line.format("Sales tax:", lc.currency(sales_tax, grouping=True)))
+        print(line.format("Invoice total:", lc.currency(invoice_total, grouping=True)))
+        print()
         choice = input("Try again? (y/n): ")
         if choice.lower() != "y":
             should_Exit = True

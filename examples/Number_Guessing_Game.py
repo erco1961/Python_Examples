@@ -9,7 +9,7 @@ import random
 # import local module for welcome message
 import stringer
 
-AUTHOR = "Erin"
+AUTHOR = "Erin Coffey"
 NAME = "Number Guessing Game"
 LIMIT = 10
 

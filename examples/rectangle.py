@@ -9,13 +9,14 @@
 import stringer
 
 NAME = "Rectangle Area and Perimiter"
-AUTHOR = "Erin"
+AUTHOR = "Erin Coffey"
 
 def main():
     stringer.show_welcome(NAME)
     should_Exit = False
     
     while not should_Exit:
+        print()
 
         # get input from the user
         length = float(input("Enter Rectangle length:\t"))

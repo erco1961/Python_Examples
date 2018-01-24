@@ -8,7 +8,7 @@
 import stringer
 
 NAME = "Miles per Gallon"
-AUTHOR = "Erin"
+AUTHOR = "Erin Coffey"
 
 def main():
     stringer.show_welcome(NAME)

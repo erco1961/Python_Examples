@@ -9,7 +9,7 @@ import stringer
 
 import random
 
-AUTHOR = "Erin"
+AUTHOR = "Erin Coffey"
 NAME = "Meta Data"
 MAX = 50
 
