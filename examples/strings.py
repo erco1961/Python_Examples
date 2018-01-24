@@ -23,6 +23,18 @@ def show_ordinal_values():
         total_value += ord(char)
     print("The total ordinal value of the string is: '" + str(total_value) + "'\n")
 
+    words = myString.split()# split on space
+    print("The words in the string are: ")
+    for word in words:
+        print(word)
+    print()
+
+    segments = myString.split("e")
+    print("If we split on the letter 'e'... ")
+    for segment in segments:
+        print(segment.lstrip())#remove space to the left of the segmentß
+    print()
+    
 # end show_ordinal_values
 
 def demonstrate_string_indices_and_slices():
