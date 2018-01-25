@@ -32,12 +32,12 @@ def show_welcome(program_name = "test", author = "Erin Coffey"):
     if middleLineLength % 2 != 0:
         myStars2 += "*"
         
-    print(myStars, end = "")
-    print(myLang, end = "")
+    print(myStars, end='')
+    print(myLang, end='')
     print(myStars2)
     print("**   "+author+"\'s " + program_name + " program   **")
-    print(myStars, end = "")
-    print(myLang, end = "")
+    print(myStars, end='')
+    print(myLang, end='')
     print(myStars2)
 # end show_welcome()
 
