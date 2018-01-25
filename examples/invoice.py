@@ -17,13 +17,13 @@ from decimal import ROUND_HALF_UP
 # currency formatting
 import locale as lc
 
+# date, time, time-delta
+from datetime import datetime, timedelta
+
 NAME = "Invoice"
 AUTHOR = "Erin Coffey"
 
-def main():
-    stringer.show_welcome(NAME)
-    should_Exit = False
-
+def display_customer_types():
     print()
     print("======================")
     print()
@@ -34,16 +34,82 @@ def main():
     print()
     print("======================")
     print()
-         
+# end display_customer_types()
+
+def get_invoice_date():
+    while True:
+        try:
+            invoice_date_str = input("Enter the invoice date MM/DD/YYYY: ")
+            invoice_date = datetime.strptime(invoice_date_str, "%m/%d/%y")
+            break
+        except Exception as e:
+            print(invoice_date_str + " is not a valid format. Please try again.")
+            continue
+    return invoice_date
+
+# end get_invoice_date()
+
+def calculate_due_date(invoice_date):
+    due_date = invoice_date + timedelta(days=30)
+    current_date = datetime.now()
+    days_late = (current_date - due_date).days
+
+    return current_date, due_date, days_late
+
+# end calculate_due_date()
+
+def show_due_date(invoice_date, current_date, due_date, days_overdue):
+        print()
+        print("{:15} {:10} {:2} {:5}".format("Invoice date: ",
+                                             invoice_date.strftime("%B"),
+                                             invoice_date.strftime("%d"),
+                                             invoice_date.strftime("%Y")))
+        #print("Invoice date: " + invoice_date.strftime("%B %d %Y"))
+        print("{:15} {:10} {:2} {:5}".format("Due date: ",
+                                             due_date.strftime("%B"),
+                                             due_date.strftime("%d"),
+                                             due_date.strftime("%Y")))
+        #print("Due date: " + due_date.strftime("%B %d %Y"))
+        print("{:15} {:10} {:2} {:5}".format("Current date: ",
+                                             current_date.strftime("%B"),
+                                             current_date.strftime("%d"),
+                                             current_date.strftime("%Y")))
+        #print("Current date: " + current_date.strftime("%B %d %Y"))
+        print()
+
+        if days_overdue == 1:
+            print("This invoice is one day overdue.")
+        elif days_overdue > 1:
+            print("This invoice is", days_overdue, "days overdue.")
+        else:
+            days_due = days_overdue * -1
+            if days_due == 0:
+                print("This invoice is due today.")
+            elif days_due == 1:
+                print("This invoice is due in one day.")
+            else:
+                print("This invoice is due in", days_due, "days.")
+ 
+# end show_due_date()
+
+def main():
+    stringer.show_welcome(NAME)
+    should_Exit = False
+
     while not should_Exit:
         new_invoice_total = invoice_total = discount_percent = discount_amount = 0
         customer_type = "unknown_type" 
 
         
         # get customer_type from the user
+        display_customer_types()
         customer_type = input("Enter customer type (r/w):\t")
         order_total = Decimal(val.get_float("Enter order total:\t\t", 100000))
         order_total = order_total.quantize(Decimal("1.00"), ROUND_HALF_UP)
+
+        # get invoice date
+        invoice_date = get_invoice_date()
+        current_date, due_date, days_overdue = calculate_due_date(invoice_date)
 
         # determine discount for retail customer
         if customer_type.lower() == "r":
@@ -92,6 +158,10 @@ def main():
         print(line.format("Subtotal:", lc.currency(subtotal, grouping=True)))
         print(line.format("Sales tax:", lc.currency(sales_tax, grouping=True)))
         print(line.format("Invoice total:", lc.currency(invoice_total, grouping=True)))
+        print()
+        
+        show_due_date(invoice_date, current_date, due_date, days_overdue)
+        
         print()
         choice = input("Try again? (y/n): ")
         if choice.lower() != "y":
