@@ -7,10 +7,14 @@
 # import local module for welcome message
 import stringer
 
+# import module for tracking lost time
+import timer
+
 NAME = "Looping examples"
 AUTHOR = "Erin Coffey"
 
 def main():
+    myTimer = timer.begin_timer()
     stringer.show_welcome(NAME)
     num_Loops = 0
     should_Exit = False
@@ -61,6 +65,7 @@ def main():
         if choice.lower() != "y":
             should_Exit = True
         # end while loop
+    timer.stop_timer(myTimer)
     print("Bye!")
 # end main
 

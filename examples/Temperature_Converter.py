@@ -8,6 +8,8 @@
 import temperature as temp
 # import stringer module for welcome message
 import stringer
+# import module for tracking lost time
+import timer
 
 NAME = "Temperature Converter"
 AUTHOR = "Erin Coffey"
@@ -18,6 +20,7 @@ def convert_temp(type):
 # end convert_temp
 
 def main():
+    myTimer = timer.begin_timer()
     stringer.show_welcome(NAME)
     should_Exit = False
     converted_temp = 0.0
@@ -47,6 +50,7 @@ def main():
         if choice.lower() != "y":
             should_Exit = True
     # end while loop
+    timer.stop_timer(myTimer)
     print("Bye!")
 # end main()
 

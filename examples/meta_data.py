@@ -6,7 +6,8 @@
 
 # import stringer module for welcome message
 import stringer
-
+# import module for tracking lost time
+import timer
 import random
 
 AUTHOR = "Erin Coffey"
@@ -52,6 +53,7 @@ def get_meta_data(data):
 # end get_meta_data()
 
 def main():
+  myTimer = timer.begin_timer()
   stringer.show_welcome(NAME)
   random_list = [0] * 11
   fixed_tuple = (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50)
@@ -70,6 +72,7 @@ def main():
     if choice.lower() != "y":
       break
   # end while loop
+  timer.stop_timer(myTimer)
   print("Bye!")
 # end main()
 

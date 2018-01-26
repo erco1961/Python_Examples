@@ -8,6 +8,8 @@
 import stringer
 # import random for dice rolls
 import random
+# import module for tracking lost time
+import timer
 
 NAME = "Pig Dice"
 AUTHOR = "Erin Coffey"
@@ -83,6 +85,7 @@ def play_game():
 # end play_game
 
 def main():
+    myTimer = timer.begin_timer()
     stringer.show_welcome(NAME)
     display_rules()
     should_Exit = False
@@ -95,6 +98,7 @@ def main():
         if choice.lower() != "y":
             should_Exit = True
     #   end while loop
+    timer.stop_timer(myTimer)
     print("Bye!")
 # end main
 

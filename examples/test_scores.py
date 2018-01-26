@@ -6,6 +6,8 @@
 
 # import local module for welcome message
 import stringer
+# import module for tracking lost time
+import timer
 
 NAME = "Test Scores"
 AUTHOR = "Erin Coffey"
@@ -91,6 +93,7 @@ def display_results(scores):
 # end display_results()
 
 def main():
+    myTimer = timer.begin_timer()
     stringer.show_welcome(NAME)
     display_help()
     
@@ -106,6 +109,7 @@ def main():
         if choice.lower() != "y":
             break
         # end while loop
+    timer.stop_timer(myTimer)
     print("Bye!")
 # end main
 

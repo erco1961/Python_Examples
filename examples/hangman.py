@@ -8,6 +8,8 @@
 import stringer
 # import module for getting random words
 import wordlist
+# import module for tracking lost time
+import timer
 
 AUTHOR = "Erin Coffey"
 NAME = "Hangman"
@@ -122,6 +124,7 @@ def play_game():
 # end play_game()
 
 def main():
+  myTimer = timer.begin_timer()
   stringer.show_welcome(NAME)
   print()
   print("Play the HANGMAN game")
@@ -137,8 +140,10 @@ def main():
       break
 
   # end while loop
+  timer.stop_timer(myTimer)
 # end main()
 print("Bye!")
+
 
 #if the current module is the main module
 if __name__ == "__main__":

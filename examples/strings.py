@@ -6,6 +6,8 @@
 
 # import local module for welcome message
 import stringer
+# import module for tracking lost time
+import timer
 
 AUTHOR = "Erin Coffey"
 NAME = "Working with String objects"
@@ -156,23 +158,24 @@ def play_with_strings():
 # end demonstrate_string_searches()
 
 def main():
-  stringer.show_welcome(NAME)
+    myTimer = timer.begin_timer()
+    stringer.show_welcome(NAME)
 
-  while True:
-    print()
-    show_ordinal_values()
-    demonstrate_string_indices_and_slices()
-    demonstrate_string_searches()
-    play_with_strings()
+    while True:
+        print()
+        show_ordinal_values()
+        demonstrate_string_indices_and_slices()
+        demonstrate_string_searches()
+        play_with_strings()
 
-
-    choice = input("Try \'" + NAME + "\' program again? (y/n): ")
-    if choice.lower() != "y":
-      break
-
-  # end while loop
+        choice = input("Try \'" + NAME + "\' program again? (y/n): ")
+        if choice.lower() != "y":
+            break
+    # end while loop
+    timer.stop_timer(myTimer)
+    print("Bye!")
 # end main()
-print("Bye!")
+
 
 #if the current module is the main module
 if __name__ == "__main__":

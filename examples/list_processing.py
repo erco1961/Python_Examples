@@ -8,6 +8,8 @@
 import stringer
 # import validation module for taking valid user input
 import validation
+# import module for tracking lost time
+import timer
 
 import copy
 import random
@@ -511,6 +513,7 @@ def get_save_file(save_mode):
  # end get_save_file() 
 
 def main():
+  myTimer = timer.begin_timer()
   stringer.show_welcome(NAME)
   movies_list = [[]]#initialize empty list with correct structure
   movies_list.pop()#remove empty element
@@ -569,6 +572,7 @@ def main():
   except ValueError as e:
     print("ValueError:", e)
   finally:
+    timer.stop_timer(myTimer)
     print("Bye!")
 # end main()
 

@@ -8,7 +8,8 @@
 import stringer
 # import validation module for taking valid user input
 import validation
-
+# import module for tracking lost time
+import timer
 # for rounding errors
 from decimal import Decimal
 
@@ -52,6 +53,7 @@ def display_investment_results(monthly_investment, years, totalInv, resulting_va
 # end display_investment_results
 
 def main():
+  myTimer = timer.begin_timer()
   stringer.show_welcome(NAME)
   should_Exit = False
   yearly_interest_rate = monthly_investment = Decimal("0.00")
@@ -79,8 +81,10 @@ def main():
       should_Exit = True
 
   # end while loop
+  timer.stop_timer(myTimer)
+  print("Bye!")
 # end main()
-print("Bye!")
+
 
 #if the current module is the main module
 if __name__ == "__main__":

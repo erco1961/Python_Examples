@@ -6,9 +6,10 @@
 
 # import local module for welcome message
 import stringer
-
 # import validation module for taking valid user input
 import validation as val
+# import module for tracking lost time
+import timer
 
 #to fix rounding errors
 from decimal import Decimal
@@ -93,6 +94,7 @@ def show_due_date(invoice_date, current_date, due_date, days_overdue):
 # end show_due_date()
 
 def main():
+    myTimer = timer.begin_timer()
     stringer.show_welcome(NAME)
     should_Exit = False
 
@@ -167,6 +169,7 @@ def main():
         if choice.lower() != "y":
             should_Exit = True
         # end while loop
+    timer.stop_timer(myTimer)
     print("Bye!")
 # end main
 
