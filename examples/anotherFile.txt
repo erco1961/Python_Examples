@@ -1,0 +1,73 @@
+15+ years engineering R&D experience in a hardware manufacturing and embedded software development environment working with complex systems of processes and technologies across manufacturing, product engineering, marketing and, customer service domains. Known for working with a variety of technologies and, collaborating with experts across business domains to simplify business and manufacturing processes to make them more efficient. Worked with Tektronix manufacturing, marketing and quality organizations to reduce product manufacturing test time, simplify installation of SW updates, improve on-time delivery statistics and ensure product configuration quality of customer shipments.
+
+TECHNOLOGIES:
+	
+•	C/C++/C#, MSVS 2013, Windows Forms/WPF/Console applications, Xcode/SWIFT, Java
+•	PERL, CGI, JSP, HTML, SCRIPTING, InstallShield, InstallAware, TrueUpdate
+•	Linux, UNIX, Windows, Macintosh, Microsoft Office tools
+•	ClearCase, ClearQuest, SVN, RCS/CVS, Code Collaborator, GIT, JIRA, JENKINS, SQL
+
+EXPERIENCE:
+
+Software Engineer                                                                           		2003 – December 2017
+Tektronix, Beaverton, OR 
+
+WSBU-BERTScopes							2015 – December 2017
+Developer of receiver test automation SW, Product builds, Configuration management expert 	 
+•	Developed Receiver Testing automation SW for USB3.1 GEN1/GEN2 and PCIe3/PCIe4 
+o	Increased testing efficiency and value to customers by combining 4, legacy, stand-alone test automation tools into a single application (C#, WPF, MSAccess)
+o	Expanded tool functionality by refactoring existing code to leverage new features and capabilities of new Hardware Platform
+o	Secured multiple sales of the new Hardware Platform by providing expert demonstrations of new test automation SW to internal and external customers 
+•	Maintained build, development and configuration tools by porting from Win7 to Win10
+•	Secured HW Platform validation from USB.org by providing expert demonstrations of the automation tool (and on-the-fly code adjustments) at USB PlugFest conventions
+•	Ported GIT code repositories to new server and, updated the Jenkins build system, to support continuous integration and improve quality
+•	Windows Driver Signing
+ 
+TDBU-Performance Scopes							2010 – 2015
+Developer of embedded firmware, utilities and SW applications (C/C++/C#)	 
+•	Enhanced client-side Option Key Floating License system
+o	Developed RSA 2048 bit encryption/decryption (JAVA security classes) 
+o	Increased Floating Licenses capacity from 5 to 40 concurrent licenses per option 
+o	Enabled backwards compatibility with old style Floating Licenses by redesigning the existing NVRAM space
+•	Increased efficiency of debugging customer reported problems by developing a console utility that gathers all application logs and zips them into a single file (C#)
+•	Improved the customer experience when updating Probe firmware by developing a Probe Update Utility with a UI (C#/WPF)
+•	Staff Engineer for initial release of the 5K and 70GHz oscilloscope products 
+o	Developed Triggers, Constraints, Drivers, PI, GRAMMAR (C++)
+o	Performed Unit and system level testing, defect investigation/fixes, maintenance
+•	Architect and lead developer of SW Updates system (C#/WPF/TrueUpdate/Drupal8 API) 
+The system provides: a user-friendly interface, a safe/secure system to update all Tektronix SW installed on the product, a user prompt as new SW versions are released to the web, internal logic that prevents the user from applying incompatible SW updates
+o	Wrote all system documentation
+o	Interfaced with Marketing to design the front-end requirements
+o	Collaborated with Manufacturing and Engineering for back-end requirements
+o	Worked with WEB IT to design Drupal8 web Server API/services
+o	Developed application interface to Drupal (XMLRPC)
+o	Coordinated and lead meetings with Marketing, Quality, IT and Manufacturing to establish business processes and to ensure cross-departmental cooperation so that the system automatically ensures all products are shipped from Manufacturing fully and correctly configured as per the customer order 
+
+Product Lifecycle Engineering							 2007 – 2010
+Software Support Engineer	 
+•	Facilitated visual management by developing web based metrics monitoring tools (PERL, shell, html, jsp, InstallShield)
+•	Improved product quality by developing Operating System Restore (OSR) images
+o	Managed Windows Security updates and patches for released products
+o	Managed availability of the OSRs to Manufacturing facilities in USA and China 
+o	Enabled Windows OS activation via System Locked Pre-installation (SLP) 
+o	Developed BIOS installation scripts
+o	Developed/maintained application installers (InstallShield)
+
+Central Engineering (SW Tools)						 2003 – 2007
+Staff Engineer/Software Developer (C/C#/cgi/html/SQL/Perl, batch)
+•	Ensured code integrity as a ClearCase Administrator (RHELINUX, Sun5, Windows)
+o	Developed Server/Client installation vehicles (Shell, SMS/SCCM, trigger scripts)
+o	Designed/Developed targeted database synchronization technology for ClearCase to reduce network traffic and improve reliability and availability of data (PERL)
+o	Identified and Resolved Problems across multiple OS platforms
+o	Coordinated with Global IT to schedule Server updates with minimal disruption
+•	Maintained web based Option Key Encrypted Licensing system server-side (C/cgi)
+o	Supported Customer Service Representatives, Order Management and Accounts Receivable, Sales and Marketing personnel
+o	Expanded the existing system to manage systems of versioned, Option Keys (C)
+o	Designed and developed hard key (dongle) programmer application for Manufacturing (C#)
+
+EDUCATION:
+
+B.S. Computer Science/Electrical Engineering (cum laude)
+Oregon State University		 			 
+B.S. General Science
+Oregon State University		

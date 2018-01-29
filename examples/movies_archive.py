@@ -21,16 +21,16 @@ import csv
 import pickle # use for binary files access
 
 AUTHOR = "Erin Coffey"
-NAME = "List Processing"
+NAME = "Movies archive"
 MOVIE_FILE_TXT = "saved_movies.txt"
 MOVIE_FILE_CSV = "saved_movies.csv"
 MOVIE_FILE_BIN = "saved_movies.bin"
 DEBUG = False
 
 def pick_mode():
-  print("\n******************************")
-  print("**          MODES           **")
-  print("******************************\n")
+  print("\n************************************")
+  print("**         SAVIOR MODES           **")
+  print("************************************\n")
   print("**\ttxt - Program uses .txt file for movie storage")
   print("**\tcsv - Program uses .csv file for movie storage")
   print("**\tbin - Program uses .bin file for movie storage")
@@ -553,7 +553,7 @@ def main():
   display_menu()
   try:
     while True:
-      command = input("\nBye Your Command:\t")
+      command = input("\nBy Your Command...\t")
       command = command.rstrip()
       if command.lower() == "list":
         print_movie_list(movies_list)
