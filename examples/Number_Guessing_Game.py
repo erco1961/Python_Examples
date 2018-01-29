@@ -4,6 +4,10 @@
 # by Erin Coffey
 # 12 January 2018
 
+import sys
+MODULES_DIR = "/Users/erin/Documents/Development/Python/modules/"
+sys.path.append(MODULES_DIR)
+
 # import the random module
 import random
 # import local module for welcome message

@@ -4,6 +4,9 @@
 # by Erin Coffey
 # 16 January 2018
 
+import sys
+MODULES_DIR = "/Users/erin/Documents/Development/Python/modules/"
+sys.path.append(MODULES_DIR)
 # import stringer module for welcome message
 import stringer
 # import validation module for taking valid user input
