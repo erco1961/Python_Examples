@@ -16,13 +16,14 @@ import timer
 import validation as val
 
 AUTHOR = "Erin Coffey"
-NAME = "Use recursion to calculate factorial"
+NAME = "Use recursion"
 
 def display_menu():
     print()
     print("COMMAND MENU")
     print("fib    - Displays fibonacci series")
     print("fac    - Calculates factorial")
+    print("tow    - Towers of Hanoi puzzle")
     print("exit   - Exit program")
     print("help   - Shows this menu")
 
@@ -45,7 +46,7 @@ def calculate_factorial(num):
 # end calculate_factorial()
 
 def my_factorial():
-    num = val.get_int("Enter an integer number less than 15: ", 15)
+    num = val.get_int("Enter an integer number less than 25: ", 25)
     print()
     try:
         result = calculate_factorial(num)
@@ -79,13 +80,38 @@ def my_fib():
 
 # end my_fib()
 
+def move_disk(n, src, dst, tmp):
+ #   print("numCalls is " + str(numCalls))
+    
+    if n == 0:
+        return
+    else:
+        move_disk(n-1, src, tmp, dst)
+        print("Move disk",n,"from",src,"to",dst)
+        move_disk(n-1, tmp, dst, src)
+
+# end move_disk()
+
+def my_towers():
+    num_disks = val.get_int("Enter an integer number of disks to move (less than 10): ", 10)
+    numCalls = (2 ** num_disks) - 1
+    print()
+    try:
+        move_disk(num_disks, "A", "B", "C")
+        print()
+        print("All disks moved in " + str(numCalls) + " moves.")
+                
+    except Exception as e:
+        print("There was an Error processing your number.", e)    
+
+# end my_towers()
+
 def main():
     myTimer = timer.begin_timer()
     stringer.show_welcome(NAME)
     display_warning()
     print()
     display_menu()
-
     while True:
         print()
         command = input("\nBy Your Command...\t")
@@ -94,6 +120,8 @@ def main():
             my_factorial()
         elif command.lower() == "fib":
             my_fib()
+        elif command.lower() == "tow":
+            my_towers()
         elif command.lower() == "help":
             display_menu()
         elif command.lower() == "exit":
