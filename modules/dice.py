@@ -71,7 +71,7 @@ class Die:
 
     @property
     def image(self):
-        self.__image = self.getImage()
+        self.__image = self.getImage()# set the read-only attribute
 
         
 
