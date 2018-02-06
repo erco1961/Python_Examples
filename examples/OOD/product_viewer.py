@@ -14,7 +14,7 @@ import stringer
 import timer
 # import object classes
 from objects import Product, Book, Movie
-# import some input validation 
+# ifor input validation 
 import validation as val
 
 AUTHOR = "Erin Coffey"
@@ -24,7 +24,7 @@ def show_products(products):
     print("PRODUCTS")
     for i in range(len(products)):
         product = products[i]
-        print(str(i+1) + ". ",product,end="")# use overridden object definition string method
+        print(str(i+1) + ". ",product,end="")# use overridden object string representation method
         if isinstance(product, Book):
             print(" (Book)")
         elif isinstance(product, Movie):
@@ -52,7 +52,7 @@ def main():
     myTimer = timer.begin_timer()
     stringer.show_welcome(NAME)
     print()
-    # tuple of product objects
+    # tuple of product objects demonstrating polymorphism
     products = (Product("Heavy hammer", 12.99, 62),
                 Product("Light nails", 5.06, 0),
                 Movie("Blade Runner", 29.99, 0, 1984),

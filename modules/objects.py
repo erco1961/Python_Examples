@@ -47,6 +47,7 @@ class Product:
 
 # end class Product:
 
+# class Book extends class Product
 class Book(Product):
     def __init__(self, name="", price=0.0, discountPercent=0, author =""):
         Product.__init__(self, name, price, discountPercent) # call parent class constructor
@@ -60,6 +61,7 @@ class Book(Product):
 
 # end classBook(Product)
 
+# class Movie extends class Product
 class Movie(Product):
     def __init__(self, name="", price=0.0, discountPercent=0, year =0):
         Product.__init__(self, name, price, discountPercent) # call parent class constructor
@@ -96,3 +98,7 @@ class Game:
         self.die = Die()
     # end __init__
 # end class Game:
+
+#an example of a custom exception
+class DataAccessError(Exception):
+    pass

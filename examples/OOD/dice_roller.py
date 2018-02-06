@@ -5,7 +5,7 @@
 # 29 January 2018
 
 import sys
-MODULES_DIR = "/Users/erin/Documents/Development/Python/modules/"
+MODULES_DIR = "/Users/erin/Documents/Development/Python/modules2/"
 sys.path.append(MODULES_DIR)
 # import local module for welcome message
 import stringer
