@@ -12,8 +12,9 @@ sys.path.append(MODULES_DIR)
 import stringer
 # import module for tracking lost time
 import timer
-
-from objects import Product
+# import object classes
+from objects import Product, Book, Movie
+# import some input validation 
 import validation as val
 
 AUTHOR = "Erin Coffey"
@@ -23,13 +24,23 @@ def show_products(products):
     print("PRODUCTS")
     for i in range(len(products)):
         product = products[i]
-        print(str(i+1) + ". " + product.name)
+        print(str(i+1) + ". ",product,end="")# use overridden object definition string method
+        if isinstance(product, Book):
+            print(" (Book)")
+        elif isinstance(product, Movie):
+            print(" (Movie)")
+        else:
+            print()
     print()
 # end show_products()
 
 def show_product(product):
     print("PRODUCT DATA")
     print("Name:                              {:s}".format(product.name))
+    if isinstance(product, Book):
+        print("Author:                            {:s}".format(product.author))
+    if isinstance(product, Movie):
+        print("Year:                              {:d}".format(product.year))
     print("Price:                             {:.2f}".format(product.price))
     print("Discount percent:                  {:d}%".format(product.discountPercent))
     print("Discount amount:                   {:.2f}".format(product.getDiscountAmount()))
@@ -44,6 +55,8 @@ def main():
     # tuple of product objects
     products = (Product("Heavy hammer", 12.99, 62),
                 Product("Light nails", 5.06, 0),
+                Movie("Blade Runner", 29.99, 0, 1984),
+                Book("Moby Dick", 19.99, 0, "Herman Melville"),
                 Product("Medium tape", 7.24, 0))
     show_products(products)
 

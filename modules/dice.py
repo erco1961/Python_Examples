@@ -104,5 +104,18 @@ class Dice:
     def rollAll(self):
         for die in self.__list:
             die.roll()
+
+    # create iterator and next methods for this class
+    def __iter__(self):
+        self.__index = -1           # initialize index for each iteration
+        return self
+
+    def __next__(self):
+        if self.__index >= len(self.__list) - 1:
+            raise StopIteration()
+        self.__index += 1
+        die = self.__list[self.__index]
+        return die
+    
     # end rollAll()
 # end class Dice 

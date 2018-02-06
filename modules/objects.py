@@ -32,7 +32,57 @@ class Product:
         return self.price - self.getDiscountAmount()
     # end getDiscountPrice()
 
+    def getDescription(self):
+        return self.name
+    # end getDiscountPrice()
+
+    # override the __str__() method from class Object
+    def __str__(self):
+        returnString = self.name + " | " + str(self.price)
+        if self.discountPercent > 0:
+            returnString += " | " + str(self.discountPercent) + "% off"
+        return returnString
+
+    # end __str()
+
 # end class Product:
+
+class Book(Product):
+    def __init__(self, name="", price=0.0, discountPercent=0, author =""):
+        Product.__init__(self, name, price, discountPercent) # call parent class constructor
+        self.author = author
+    # end __init__
+
+    # override the getDescription() method
+    def getDescription(self):
+        return Product.getDescription(self) + " by " + self.author
+    # end getDescription()
+
+# end classBook(Product)
+
+class Movie(Product):
+    def __init__(self, name="", price=0.0, discountPercent=0, year =0):
+        Product.__init__(self, name, price, discountPercent) # call parent class constructor
+        self.year = year
+    # end __init__
+
+    @property
+    def year(self):
+        return self.__year
+
+    @year.setter
+    def year(self, year):
+        if year < 1900:
+            raise ValueError("Movies were not made before 1900")
+        else:
+            self.__year = year
+
+    # override the getDescription() method
+    def getDescription(self):
+        return Product.getDescription(self) + " (" + str(self.year) + ")"
+    # end getDescription()
+
+# end classBook(Product)
 
 from dice import Die #should be in same directory as all other local modules!
 

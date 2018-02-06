@@ -7,7 +7,6 @@
 import sys
 MODULES_DIR = "/Users/erin/Documents/Development/Python/modules/"
 sys.path.append(MODULES_DIR)
-4
 # import local module for welcome message
 import stringer
 # import module for tracking lost time
@@ -28,21 +27,20 @@ def main():
         print()
         
         try:
-            number = val.get_int("Enter number of dice to roll: ",10,0)#max 10 dice
+            number = val.get_int("Enter number of dice to roll: ",10,0)# use validation module to set max 10 dice
+
             #create Dice object to hold the dice
             dice = Dice()
             for i in range(number):
                 die = Die()
                 dice.addDie(die)
+
             #roll dem bones!
             dice.rollAll()
-##            print("Use accessor to get values...")
-##            print("YOUR ROLL: ", end="")
-##            for die in dice.list:
-##                print(die.getValue(), end=" ")
-            print("\nUse property to get values...")
+
             print("YOUR ROLL: ")
-            for die in dice.list:
+            # use itertor from class Dice
+            for die in dice:
                 print(die.getImage())               
             print()
                 
