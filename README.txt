@@ -2,7 +2,7 @@ Erin Coffey's Python examples.
 
 
 Hello!
-Thank you for reviewing my Python work.
+Thank you for reviewing my Python work. I am still working on this so, come back later and, you will see more work!
 
 Procedural Python examples:
 	available in the /examples folder.

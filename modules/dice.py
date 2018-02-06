@@ -25,9 +25,14 @@ class Die:
 
     def roll(self):
         self.__value = random.randrange(1,7)
- #       return self.__value
     # end roll()
-        
+
+    # override the class Object __str__() method to make it easy to get the value
+    def __str__(self):
+        return str(self.__value)
+    # end __str__(self)
+
+    # probably never used but...
     @value.setter
     def value(self, value):
         if value < 1 or value > 6:
@@ -36,6 +41,8 @@ class Die:
             self.__value = value
     # end @value.setter Value()
 
+    
+    #just for fun, make an image for each die face
     def getImage(self):
         if self.value == 1:
             self.__image = " _____ \n" + \
@@ -73,17 +80,6 @@ class Die:
     def image(self):
         self.__image = self.getImage()# set the read-only attribute
 
-        
-
-##    def SetValue(self, value):
-##        if value < 1 or value > 6:
-##            raise ValueError("Die value must be from 1 to 6.")
-##        else:
-##            self.__value = value
-    # end SetValue()
-
-
-
 # end class Die
 
 class Dice:
@@ -95,8 +91,8 @@ class Dice:
     def list(self):
         dice_tuple = tuple(self.__list)
         return dice_tuple
-
     # end @property list()
+    
     def addDie(self, die):
         self.__list.append(die)
     # end addDie()
